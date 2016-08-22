@@ -7,8 +7,6 @@
  */
 
 
-http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeData?page=1&num=100&sort=symbol&asc=1&node=hs_a&symbol=&_s_r_a=init
-
 /**
  * 数据含义
  * [0] => 柳钢股份           名称
