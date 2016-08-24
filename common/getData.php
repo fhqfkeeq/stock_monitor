@@ -46,23 +46,37 @@
  * [34] => -0.26%           涨跌幅
  */
 
-include "../common/common.php";
+//include "./common.php";
 
-$code = 'sh601003';
-$url = 'http://hq.sinajs.cn/list='.$code;
+function getData($code)
+{
+    $code_list = explode(',', $code);
+
+    $url = 'http://hq.sinajs.cn/list=' . $code;
 //$url = 'http://qt.gtimg.cn/q=sz000858';
-$info = curl_get($url);
-preg_match_all('/"(.*)"/', $info,$data);
+    $info = curl_get($url);
+    preg_match_all('/"(.*)"/', $info, $data);
 
-foreach ($data[1] as $item){
-    $item_data = explode(',', $item);
-    $item_data[0] = iconv("GBK","UTF-8", $item_data[0]);
-    //计算涨跌额
-    $zde = bcsub($item_data[3], $item_data[1], 2);
-    //计算涨幅
-    $zf = bcdiv($zde, $item_data[3], 4)*100;
-    $item_data[] = $zde;
-    $item_data[] = $zf."%";
+    foreach ($data[1] as $key => $item) {
+        $item_data = explode(',', $item);
+        $item_data[0] = iconv("GBK", "UTF-8", $item_data[0]);
+        //计算涨跌额
+        $zde = bcsub($item_data[3], $item_data[1], 2);
+        //计算涨幅
+        $zf = bcdiv($zde, $item_data[3], 4) * 100;
+        $item_data[] = $zde;
+        $item_data[] = $zf . "%";
+
+        $return_data[$code_list[$key]] = $item_data;
+    }
+
+    return $return_data;
 }
 
-echo PHP_EOL;
+function getPositions($code){
+    $positions = [
+        'sh600149' => ['0' , '0.00'],
+    ];
+
+    return $positions[$code];
+}
