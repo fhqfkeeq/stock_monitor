@@ -38,3 +38,30 @@ function curl_get($url = ''){
     curl_close($curl);
     return $tmpInfo;
 }
+
+function send_msg($message){
+    $config = $GLOBALS['mail'];
+
+    $mail = new PHPMailer();
+
+    $mail->isSMTP();
+    $mail->Host = $config['smtp'];
+    $mail->SMTPAuth = true;
+    $mail->Username = $config['mail'];
+    $mail->Password = $config['password'];
+    $mail->Port = 25;
+
+    $mail->setFrom($config['mail']);
+    $mail->addAddress($config['tomail']);
+
+    $mail->Subject = 'notily';
+    $mail->Body = $message;
+    $mail->AltBody = '';
+
+    if(!$mail->send()) {
+        echo 'Message could not be sent.';
+        echo 'Mailer Error: ' . $mail->ErrorInfo;
+    } else {
+        echo 'Message has been sent';
+    }
+}

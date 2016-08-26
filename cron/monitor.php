@@ -6,6 +6,7 @@
  * Time: 11:03
  */
 
+include dirname(__FILE__)."/../vendor/autoload.php";
 include dirname(__FILE__)."/../common/common.php";
 include dirname(__FILE__)."/../common/config.php";
 include dirname(__FILE__)."/../common/getData.php";
