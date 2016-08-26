@@ -22,7 +22,9 @@ foreach ($GLOBALS['threshold'] as $key => $item) {
         if(abs(bcsub($data[$key][3], $item['in'], 2)) <= 1 ){
             //可以买入
             //记入redis每天只提醒一次
-            send_msg('股票:'.$key.'已达到买入价格:'.$data[$key][3].'请关注!');
+            if(is_send($key,'out') === true){
+                send_msg('股票:'.$key.'已达到买入价格:'.$data[$key][3].'请关注!');
+            }
         }
     }
 
@@ -32,7 +34,22 @@ foreach ($GLOBALS['threshold'] as $key => $item) {
         if($positions[0] > 0 && abs(bcsub($data[$key][3], $item['out'], 2)) <= 1 ){
             //可以卖出
             //记入redis每天只提醒一次
-            send_msg('股票:'.$key.'已达到卖出价格:'.$data[$key][3].'可卖数量为:'.$positions[0].', 请关注!');
+            if(is_send($key,'out') === true){
+                send_msg('股票:'.$key.'已达到卖出价格:'.$data[$key][3].'可卖数量为:'.$positions[0].', 请关注!');
+            }
         }
+    }
+}
+
+function is_send($code, $type){
+    date_default_timezone_set('Asia/Chongqing');
+
+    $date = date('Y-m-d');
+    $filePath = '/Users/zhaojipeng/www/stock_monitor/'.$date.'_'.$code.'_'.$type.'.log';
+    if(file_exists($filePath) === false){
+        file_put_contents($filePath, 'ok');
+        return true;
+    }else{
+        return false;
     }
 }
