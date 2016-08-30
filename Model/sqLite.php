@@ -25,7 +25,7 @@
 
 class MyDB extends SQLite3
 {
-    private $db_file = '/Users/zhaojipeng/www/stock_monitor/stock.db';
+    private $db_file = '/stock.db';  //必须使用绝对路径
     function __construct()
     {
         $is_create_tab = false;
