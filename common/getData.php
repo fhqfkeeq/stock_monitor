@@ -74,9 +74,12 @@ function getData($code)
 }
 
 function getPositions($code){
-    $positions = [
-        'sh600149' => ['0' , '0.00'],
-    ];
+    $db = new MyDB();
+    $where = 'code  = "'.$code.'"';
+    $info = $db->get($where);
+    foreach ($info as $item) {
+        $positions[$item['code']] = [$item['number'], $item['price']];
+    }
 
     return $positions[$code];
 }

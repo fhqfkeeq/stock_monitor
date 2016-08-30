@@ -10,6 +10,7 @@ include dirname(__FILE__)."/../vendor/autoload.php";
 include dirname(__FILE__)."/../common/common.php";
 include dirname(__FILE__)."/../common/config.php";
 include dirname(__FILE__)."/../common/getData.php";
+include dirname(__FILE__)."/../Model/sqLite.php";
 
 $data = getData($GLOBALS['code']);
 foreach ($GLOBALS['threshold'] as $key => $item) {
